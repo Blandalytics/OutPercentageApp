@@ -133,11 +133,11 @@ st.markdown('<p class="subtitle">Analyze MLB player out percentages by pitch typ
 
 # Function to load and process data
 @st.cache_data(ttl=3600)  # Cache for 1 hour
-def load_statcast_data(start_year, end_year):
+def load_statcast_data(year):
     try:
-        # Get data for selected years
-        start_date = f"{start_year}-03-01"
-        end_date = f"{end_year}-11-30"
+        # Get data for selected year
+        start_date = f"{year}-03-01"
+        end_date = f"{year}-11-30"
         
         with st.spinner("Fetching Statcast data... This may take a moment."):
             data = statcast(start_dt=start_date, end_dt=end_date)
@@ -291,7 +291,7 @@ with st.sidebar:
 
 # Main app
 # Load data for the selected year
-data = load_statcast_data(year, year)
+data = load_statcast_data(year)
 
 if not data.empty:
     # Process data
