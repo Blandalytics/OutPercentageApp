@@ -331,7 +331,6 @@ if not data.empty:
                     height=500,
                     margin=dict(t=30, b=0, l=0, r=0),
                     font=dict(family="Arial", size=12),
-                    title_font=dict(family="Arial", size=16),
                     legend=dict(
                         orientation="v",
                         yanchor="top",
