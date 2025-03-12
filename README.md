@@ -2,7 +2,7 @@
 
 A Streamlit application for analyzing MLB player out percentages by pitch type using Statcast data.
 
-![App Screenshot](https://i.imgur.com/placeholder.png)
+![Screenshot 2025-03-12 094245](https://github.com/user-attachments/assets/1ae12b06-17a4-4cc2-b197-3f1c566ae7a2)
 
 ## Overview
 
@@ -58,11 +58,8 @@ Out percentage is calculated as the number of pitches that resulted in an out di
 ## Deployment
 
 This application is deployed on Streamlit Cloud and can be accessed at:
-[https://out-percentage-analysis.streamlit.app](https://out-percentage-analysis.streamlit.app)
+[[https://out-percentage-analysis.streamlit.app](https://out-percentage-analysis.streamlit.app)](https://pitcherlistoutpercentage.streamlit.app/)
 
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
