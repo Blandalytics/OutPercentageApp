@@ -23,8 +23,8 @@ st.markdown("""
         font-weight: 700;
         color: #0066cc;
         text-align: center;
-        margin-bottom: 0.5rem;
-        padding-bottom: 0.5rem;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
         border-bottom: 2px solid #f0f2f6;
     }
     
@@ -33,7 +33,7 @@ st.markdown("""
         font-size: 1.2rem;
         color: #666;
         text-align: center;
-        margin-bottom: 1rem;
+        margin-bottom: 2rem;
     }
     
     /* Section headers */
@@ -41,9 +41,9 @@ st.markdown("""
         font-size: 1.8rem;
         font-weight: 600;
         color: #0066cc;
-        margin-top: 1rem;
-        margin-bottom: 0.5rem;
-        padding-bottom: 0.3rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
         border-bottom: 1px solid #f0f2f6;
     }
     
@@ -53,25 +53,16 @@ st.markdown("""
         padding: 1rem;
         background-color: #f8f9fa;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        margin-bottom: 1rem;
+        margin-bottom: 2rem;
     }
     
-    
-    /* Remove spacing between elements */
-    .element-container {
-        margin-bottom: 0 !important;
-    }
-    
-    /* Remove padding from markdown elements */
-    .stMarkdown {
-        padding-bottom: 0 !important;
-        margin-bottom: 0 !important;
-    }
-    
-    /* Tighten up headers */
-    h4 {
-        margin-top: 0.5rem !important;
-        margin-bottom: 0.5rem !important;
+    /* Chart container */
+    .chart-container {
+        border-radius: 10px;
+        padding: 1rem;
+        background-color: #f8f9fa;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
     }
     
     /* Footer styling */
@@ -101,28 +92,6 @@ st.markdown("""
     
     .stButton button:hover {
         background-color: #0052a3;
-    }
-    
-    /* Compact layout */
-    [data-testid="column"] {
-        padding: 0 !important;
-        margin: 0 !important;
-    }
-    
-    /* Remove whitespace from streamlit components */
-    div.block-container {
-        padding-top: 1rem !important;
-        padding-bottom: 1rem !important;
-    }
-    
-    /* Reduce spacing in stMarkdown */
-    div.stMarkdown p {
-        margin-bottom: 0.3rem !important;
-    }
-    
-    /* Reduce spacing in plotly charts */
-    .js-plotly-plot {
-        margin-bottom: 0 !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -291,7 +260,7 @@ with st.sidebar:
 
 # Main app
 # Load data for the selected year
-data = load_statcast_data(year)
+data = load_statcast_data(year, year)
 
 if not data.empty:
     # Process data
@@ -323,6 +292,7 @@ if not data.empty:
             
             with col1:
                 # Display data table with styling
+                st.markdown('<div class="dataframe-container">', unsafe_allow_html=True)
                 st.markdown("#### Pitch Type Breakdown")
                 
                 # Sort by out percentage descending
@@ -337,12 +307,13 @@ if not data.empty:
                         'out_percentage': 'Out %'
                     })
                     .style.format({'Out %': '{:.2f}%'})
-                    .background_gradient(subset=['Out %'], cmap='RdYlGn')
+                    .background_gradient(subset=['Out %'], cmap='RdYlGn_r')
                     .set_properties(**{'text-align': 'center'})
                 )
                 st.markdown('</div>', unsafe_allow_html=True)
                 
                 # Add summary statistics
+                st.markdown('<div class="dataframe-container">', unsafe_allow_html=True)
                 st.markdown("#### Summary Statistics")
                 
                 total_pitches = pitch_results['total_pitches'].sum()
@@ -359,6 +330,7 @@ if not data.empty:
             
             with col2:
                 # Create pie chart with styling
+                st.markdown('<div class="chart-container">', unsafe_allow_html=True)
                 st.markdown(f"#### {selected_formatted_player}'s Out Percentage by Pitch Type")
                 
                 # Create labels with pitch name and percentage
@@ -377,9 +349,10 @@ if not data.empty:
                 # Update layout
                 fig.update_layout(
                     legend_title="Pitch Type (Out %)",
-                    height=450,
-                    margin=dict(t=10, b=10, l=10, r=10),
+                    height=500,
+                    margin=dict(t=30, b=0, l=0, r=0),
                     font=dict(family="Arial", size=12),
+                    title_font=dict(family="Arial", size=16),
                     legend=dict(
                         orientation="v",
                         yanchor="top",
@@ -394,6 +367,7 @@ if not data.empty:
                 st.markdown('</div>', unsafe_allow_html=True)
                 
                 # Add a comparison bar chart
+                st.markdown('<div class="chart-container">', unsafe_allow_html=True)
                 st.markdown(f"#### {selected_formatted_player} vs. League Average Out Percentage")
                 
                 # Get league average out percentage
@@ -450,8 +424,8 @@ if not data.empty:
                 
                 # Update layout
                 fig2.update_layout(
-                    height=450,
-                    margin=dict(t=10, b=10, l=10, r=10),
+                    height=500,
+                    margin=dict(t=50, b=0, l=0, r=0),
                     font=dict(family="Arial", size=12),
                     xaxis_tickangle=-45,
                     yaxis_title="Out Percentage (%)",
