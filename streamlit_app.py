@@ -4,7 +4,11 @@ import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 from pybaseball import statcast
+import pybaseball
 from datetime import datetime
+
+# Enable pybaseball caching to prevent memory issues and speed up repeated queries
+pybaseball.cache.enable()
 
 # Set page config
 st.set_page_config(
@@ -83,16 +87,17 @@ st.markdown('<h1 class="main-title">⚾Out Percentage Analysis⚾</h1>', unsafe_
 st.markdown('<p class="subtitle">Analyze MLB player out percentages by pitch type using Statcast data</p>', unsafe_allow_html=True)
 
 # Function to load and process data
-@st.cache_data(ttl=3600,show_spinner="Fetching Statcast data... This may take a moment.")  # Cache for 1 hour
+@st.cache_data(ttl=3600, show_spinner=False)  # Cache for 1 hour
 def load_statcast_data(year):
     try:
         # Get data for selected year
         start_date = f"{year}-03-01"
         end_date = f"{year}-11-30"
         
-        with st.spinner("Fetching Statcast data... This may take a moment."):
+        with st.spinner(f"Fetching {year} Statcast data... This may take a moment. Data will be cached for faster access in future runs."):
+            # Using pybaseball's built-in caching to prevent memory issues
             data = statcast(start_dt=start_date, end_dt=end_date)
-            st.success("Data loaded successfully!")
+            st.success(f"Data for {year} loaded successfully and cached!")
         return data
     except Exception as e:
         st.error(f"Error loading data: {e}")
@@ -103,12 +108,15 @@ def load_statcast_data(year):
             today = datetime.now()
             new_start_date = (today - timedelta(days=21)).strftime("%Y-%m-%d")
             new_end_date = today.strftime("%Y-%m-%d")
-            with st.spinner(f"Trying with a smaller date range: {new_start_date} to {new_end_date}..."):
+            st.warning(f"Trying with a smaller date range: {new_start_date} to {new_end_date}...")
+            
+            with st.spinner(f"Fetching recent Statcast data... This may take a moment."):
                 data = statcast(start_dt=new_start_date, end_dt=new_end_date)
                 st.success("Data loaded successfully with reduced date range!")
             return data
         except Exception as e2:
             st.error(f"Failed to load data: {e2}")
+            st.info("Try restarting the app or selecting a different year. Statcast data can sometimes be unavailable.")
             return pd.DataFrame()
 
 # Function to calculate out percentage based on OutPercentageNewStuff.ipynb
