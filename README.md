@@ -18,7 +18,6 @@ This application allows baseball analysts, fans, and researchers to explore how 
   - Bar chart comparing out percentages across pitch types
   - Sortable data table with detailed statistics
 - **Summary Statistics**: View overall out percentage and pitch counts
-- **High-Quality Visualizations**: Uses serif fonts and high-resolution settings (300 DPI)
 
 ## Data Source
 
