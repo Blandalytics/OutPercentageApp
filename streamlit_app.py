@@ -288,7 +288,7 @@ if not data.empty:
                         'out_percentage': 'Out %'
                     })
                     .style.format({'Out %': '{:.2f}%'})
-                    .background_gradient(subset=['Out %'], cmap='RdYlGn_r')
+                    .background_gradient(subset=['Out %'], cmap='RdYlGn')
                     .set_properties(**{'text-align': 'center'})
                 )
                 st.markdown('</div>', unsafe_allow_html=True)
