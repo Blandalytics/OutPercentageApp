@@ -47,24 +47,6 @@ st.markdown("""
         border-bottom: 1px solid #f0f2f6;
     }
     
-    /* Data table styling */
-    .dataframe-container {
-        border-radius: 10px;
-        padding: 1rem;
-        background-color: #f8f9fa;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        margin-bottom: 2rem;
-    }
-    
-    /* Chart container */
-    .chart-container {
-        border-radius: 10px;
-        padding: 1rem;
-        background-color: #f8f9fa;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        margin-bottom: 2rem;
-    }
-    
     /* Footer styling */
     .footer {
         text-align: center;
@@ -292,7 +274,6 @@ if not data.empty:
             
             with col1:
                 # Display data table with styling
-                st.markdown('<div class="dataframe-container">', unsafe_allow_html=True)
                 st.markdown("#### Pitch Type Breakdown")
                 
                 # Sort by out percentage descending
@@ -313,7 +294,6 @@ if not data.empty:
                 st.markdown('</div>', unsafe_allow_html=True)
                 
                 # Add summary statistics
-                st.markdown('<div class="dataframe-container">', unsafe_allow_html=True)
                 st.markdown("#### Summary Statistics")
                 
                 total_pitches = pitch_results['total_pitches'].sum()
@@ -330,7 +310,6 @@ if not data.empty:
             
             with col2:
                 # Create pie chart with styling
-                st.markdown('<div class="chart-container">', unsafe_allow_html=True)
                 st.markdown(f"#### {selected_formatted_player}'s Out Percentage by Pitch Type")
                 
                 # Create labels with pitch name and percentage
@@ -367,7 +346,6 @@ if not data.empty:
                 st.markdown('</div>', unsafe_allow_html=True)
                 
                 # Add a comparison bar chart
-                st.markdown('<div class="chart-container">', unsafe_allow_html=True)
                 st.markdown(f"#### {selected_formatted_player} vs. League Average Out Percentage")
                 
                 # Get league average out percentage
