@@ -6,6 +6,11 @@ import plotly.graph_objects as go
 from pybaseball import statcast
 import pybaseball
 from datetime import datetime
+import warnings
+
+# Suppress pandas FutureWarning about DataFrame concatenation
+warnings.filterwarnings("ignore", category=FutureWarning, module="pandas")
+warnings.filterwarnings("ignore", message=".*empty or all-NA.*")
 
 # Enable pybaseball caching to prevent memory issues and speed up repeated queries
 pybaseball.cache.enable()
@@ -88,25 +93,22 @@ st.markdown('<p class="subtitle">Analyze MLB player out percentages by pitch typ
 
 # Function to load and process data
 @st.cache_data(ttl=3600, show_spinner=False)  # Cache for 1 hour
-def load_statcast_data(year):
+def load_statcast_data(start_date, end_date):
     try:
-        # Get data for selected year
-        start_date = f"{year}-03-01"
-        end_date = f"{year}-11-30"
-        
-        with st.spinner(f"Fetching {year} Statcast data... This may take a moment. Data will be cached for faster access in future runs."):
+        # Get data for selected date range
+        with st.spinner(f"Fetching Statcast data from {start_date} to {end_date}... This may take a moment."):
             # Using pybaseball's built-in caching to prevent memory issues
             data = statcast(start_dt=start_date, end_dt=end_date)
-            st.success(f"Data for {year} loaded successfully and cached!")
+            st.success(f"Data loaded successfully and cached!")
         return data
     except Exception as e:
         st.error(f"Error loading data: {e}")
         # If error occurs, try with a smaller date range
         try:
-            # Try last 3 weeks
-            from datetime import timedelta
+            # Try last 2 weeks
+            from datetime import timedelta, datetime
             today = datetime.now()
-            new_start_date = (today - timedelta(days=21)).strftime("%Y-%m-%d")
+            new_start_date = (today - timedelta(days=14)).strftime("%Y-%m-%d")
             new_end_date = today.strftime("%Y-%m-%d")
             st.warning(f"Trying with a smaller date range: {new_start_date} to {new_end_date}...")
             
@@ -116,7 +118,7 @@ def load_statcast_data(year):
             return data
         except Exception as e2:
             st.error(f"Failed to load data: {e2}")
-            st.info("Try restarting the app or selecting a different year. Statcast data can sometimes be unavailable.")
+            st.info("Try selecting a smaller date range (1-2 weeks) to reduce memory usage.")
             return pd.DataFrame()
 
 # Function to calculate out percentage based on OutPercentageNewStuff.ipynb
@@ -234,6 +236,42 @@ with st.sidebar:
     current_year = datetime.now().year
     year = st.selectbox("Select Year:", list(range(current_year, 2014, -1)))
     
+    # Date range selection
+    st.markdown("### Date Range")
+    st.markdown("Select a custom date range to reduce memory usage")
+    
+    # Calculate default dates based on selected year
+    default_start = f"{year}-04-01"  # April 1st of selected year
+    
+    # If current year, use today as end date, otherwise use October 31
+    if year == current_year:
+        today = datetime.now().strftime("%Y-%m-%d")
+        default_end = today
+    else:
+        default_end = f"{year}-10-31"  # October 31st of selected year
+    
+    # Date inputs
+    start_date = st.date_input("Start Date", 
+                              value=pd.to_datetime(default_start),
+                              min_value=pd.to_datetime(f"{year}-01-01"),
+                              max_value=pd.to_datetime(f"{year}-12-31"))
+    
+    end_date = st.date_input("End Date", 
+                            value=pd.to_datetime(default_end),
+                            min_value=pd.to_datetime(f"{year}-01-01"),
+                            max_value=pd.to_datetime(f"{year}-12-31"))
+    
+    # Convert to string format for pybaseball
+    start_date_str = start_date.strftime("%Y-%m-%d")
+    end_date_str = end_date.strftime("%Y-%m-%d")
+    
+    # Calculate date range in days
+    date_range_days = (end_date - start_date).days
+    
+    # Warning for large date ranges
+    if date_range_days > 30:
+        st.warning(f"Selected range is {date_range_days} days. Large ranges may cause memory issues. Consider selecting 30 days or less.")
+    
     # Minimum pitches filter
     min_pitches = st.slider(
         "Minimum pitches for analysis:",
@@ -249,8 +287,8 @@ with st.sidebar:
     st.markdown("Data is sourced from the MLB Statcast database via the pybaseball package.")
 
 # Main app
-# Load data for the selected year
-data = load_statcast_data(year)
+# Load data for the selected date range
+data = load_statcast_data(start_date_str, end_date_str)
 
 if not data.empty:
     # Process data
