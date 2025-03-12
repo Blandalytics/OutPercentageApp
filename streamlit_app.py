@@ -83,7 +83,7 @@ st.markdown('<h1 class="main-title">⚾Out Percentage Analysis⚾</h1>', unsafe_
 st.markdown('<p class="subtitle">Analyze MLB player out percentages by pitch type using Statcast data</p>', unsafe_allow_html=True)
 
 # Function to load and process data
-@st.cache_data(ttl=3600)  # Cache for 1 hour
+@st.cache_data(ttl=3600,show_spinner="Fetching Statcast data... This may take a moment.")  # Cache for 1 hour
 def load_statcast_data(year):
     try:
         # Get data for selected year
