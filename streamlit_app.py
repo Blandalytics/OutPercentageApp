@@ -260,7 +260,7 @@ with st.sidebar:
 
 # Main app
 # Load data for the selected year
-data = load_statcast_data(year, year)
+data = load_statcast_data(year)
 
 if not data.empty:
     # Process data
