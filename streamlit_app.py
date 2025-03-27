@@ -45,6 +45,10 @@ st.markdown("""
         margin-bottom: 2rem;
         opacity: 0.8;
         font-weight: 300;
+        text-decoration: none !important;
+        border-bottom: none !important;
+        padding-bottom: 0 !important;
+        line-height: 1.5;
     }
     
     /* Section headers */
