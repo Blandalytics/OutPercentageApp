@@ -47,7 +47,7 @@ st.markdown("""
         font-weight: 300;
         text-decoration: none !important;
         border-bottom: none !important;
-        padding-bottom: 0 !important;
+        padding-bottom: 2rem !important;
         line-height: 1.5;
     }
     
