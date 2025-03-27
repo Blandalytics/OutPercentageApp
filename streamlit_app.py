@@ -37,18 +37,21 @@ st.markdown("""
         border-bottom: 2px solid #f0f2f6;
     }
     
-    /* Subtitle styling */
-    .subtitle {
-        font-size: 1.2rem;
-        color: #ffffff;
+    /* Subtitle container and styling */
+    .subtitle-container {
         text-align: center;
         margin-bottom: 2rem;
-        opacity: 0.8;
+        border: none;
+    }
+    
+    .subtitle {
+        font-size: 1.2rem;
+        color: rgba(255, 255, 255, 0.8);
         font-weight: 300;
-        text-decoration: none !important;
-        border-bottom: none !important;
-        padding-bottom: 2rem !important;
-        line-height: 1.5;
+        display: inline-block;
+        border: none;
+        text-decoration: none;
+        padding: 0;
     }
     
     /* Section headers */
@@ -229,7 +232,7 @@ st.markdown("""
 
 # App title and description
 st.markdown('<h1 class="main-title">⚾Out Percentage Analysis⚾</h1>', unsafe_allow_html=True)
-st.markdown('<p class="subtitle">Analyze MLB player out percentages by pitch type using Statcast data</p>', unsafe_allow_html=True)
+st.markdown('<div class="subtitle-container"><span class="subtitle">Analyze MLB player out percentages by pitch type using Statcast data</span></div>', unsafe_allow_html=True)
 
 # Function to load and process data
 @st.cache_data(ttl=3600, show_spinner=False)  # Cache for 1 hour
