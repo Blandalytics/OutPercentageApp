@@ -232,7 +232,6 @@ st.markdown("""
 
 # App title and description
 st.markdown('<h1 class="main-title">⚾Out Percentage Analysis⚾</h1>', unsafe_allow_html=True)
-st.markdown('<div class="subtitle-container"><span class="subtitle">Analyze MLB player out percentages by pitch type using Statcast data</span></div>', unsafe_allow_html=True)
 
 # Function to load and process data
 @st.cache_data(ttl=3600, show_spinner=False)  # Cache for 1 hour
