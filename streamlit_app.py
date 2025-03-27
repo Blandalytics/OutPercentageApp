@@ -42,12 +42,14 @@ st.markdown("""
         margin-bottom: 2rem;
         padding-bottom: 1rem;
         border-bottom: 2px solid #f0f2f6;
+        position: relative;
+        z-index: 1;
     }
     
     /* Subtitle container and styling */
     .subtitle-container {
         text-align: center;
-        margin: 0.5rem 0 0 0;
+        margin: 0.5rem 0 1rem 0;
         padding: 0;
         border: none;
     }
@@ -60,6 +62,7 @@ st.markdown("""
         border: none;
         text-decoration: none;
         padding: 0;
+        background: none;
     }
     
     /* Section headers */
@@ -213,8 +216,10 @@ st.markdown("""
     
     /* Success message styling */
     div[data-testid="stSuccessMessage"] {
-        margin-top: 0.5rem !important;
-        padding: 0.5rem !important;
+        margin-top: 2rem !important;
+        padding: 1rem !important;
+        position: relative;
+        z-index: 0;
     }
     
     /* Selectbox styling */
@@ -234,6 +239,15 @@ st.markdown("""
         border-top-left-radius: 0 !important;
         border-top-right-radius: 0 !important;
         border-top: none !important;
+    }
+    
+    /* Ensure proper stacking of elements */
+    .stApp > header {
+        z-index: 2;
+    }
+    
+    .stApp > .main {
+        z-index: 0;
     }
 </style>
 """, unsafe_allow_html=True)
