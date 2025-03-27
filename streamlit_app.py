@@ -32,7 +32,14 @@ st.markdown("""
         font-weight: 700;
         color: #0066cc;
         text-align: center;
-        margin-bottom: 1rem;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+    
+    /* Title container to hold both title and subtitle */
+    .title-container {
+        text-align: center;
+        margin-bottom: 2rem;
         padding-bottom: 1rem;
         border-bottom: 2px solid #f0f2f6;
     }
@@ -40,7 +47,8 @@ st.markdown("""
     /* Subtitle container and styling */
     .subtitle-container {
         text-align: center;
-        margin-bottom: 2rem;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
         border: none;
     }
     
@@ -231,7 +239,10 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # App title and description
+st.markdown('<div class="title-container">', unsafe_allow_html=True)
 st.markdown('<h1 class="main-title">⚾Out Percentage Analysis⚾</h1>', unsafe_allow_html=True)
+st.markdown('<div class="subtitle-container"><span class="subtitle">Analyze MLB player out percentages by pitch type using Statcast data</span></div>', unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
 
 # Function to load and process data
 @st.cache_data(ttl=3600, show_spinner=False)  # Cache for 1 hour
