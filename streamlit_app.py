@@ -40,9 +40,11 @@ st.markdown("""
     /* Subtitle styling */
     .subtitle {
         font-size: 1.2rem;
-        color: #666;
+        color: #ffffff;
         text-align: center;
         margin-bottom: 2rem;
+        opacity: 0.8;
+        font-weight: 300;
     }
     
     /* Section headers */
