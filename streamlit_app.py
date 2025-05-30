@@ -263,7 +263,7 @@ st.markdown('</div>', unsafe_allow_html=True)
 def load_statcast_data(year):
     try:
         # Get data for selected year
-        start_date = f"{year}-03-01"
+        start_date = f"{year}-04-01"
         end_date = f"{year}-11-30"
         
         with st.spinner(f"Fetching {year} Statcast data... This may take a moment."):
