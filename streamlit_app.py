@@ -483,7 +483,7 @@ with st.sidebar:
 # Main app
 # Load data for the selected year
 # data = load_statcast_data(year)
-data = pd.read_csv('https://docs.google.com/spreadsheets/d/1QiORnyPEe1k08HO8q9r9_0quv3qSVVy2kjZSC85CmQI/export?gid=0&format=csv'
+data = pd.read_csv('https://docs.google.com/spreadsheets/d/1QiORnyPEe1k08HO8q9r9_0quv3qSVVy2kjZSC85CmQI/export?gid=0&format=csv')
 
 if not data.empty:
     # Process data
